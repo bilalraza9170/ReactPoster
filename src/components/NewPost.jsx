@@ -2,6 +2,7 @@ import classes from "./NewPost.module.css";
 import { useState } from "react";
 
 function NewPost(props) {
+  
   const [enteredBody, setEnteredBody] = useState("");
   const [enteredAuthor, setEnteredAuthor] = useState("");
 
