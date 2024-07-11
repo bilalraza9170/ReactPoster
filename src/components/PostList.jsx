@@ -1,33 +1,21 @@
 import Post from "./Post";
-import NewPost from "./NewPost";
 import styles from "./PostList.module.css";
-import Modal from "./Modal";
-import { useState } from "react";
-function PostList({ isPosting, onStopPost }) {
-  const [posts, setPosts] = useState([]);
+import { useLoaderData, useRouteLoaderData } from "react-router-dom";
 
-  function addPost(postData) {
-    fetch("http://localhost:8080/posts", {
-      method: "POST",
-      body: JSON.stringify(postData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    setPosts((existingPosts) => [postData, ...existingPosts]);
-  }
+function PostList() {
+  const posts = useLoaderData();
+
   return (
     <div>
-      {isPosting ? (
-        <Modal onClose={onStopPost}>
-          <NewPost onClose={onStopPost} onAddPost={addPost} />
-        </Modal>
-      ) : null}
-
       {posts.length > 0 && (
         <ul className={styles.posts}>
           {posts.map((post) => (
-            <Post key={post.body} body={post.body} author={post.author} />
+            <Post
+              key={post.id}
+              id={post.id}
+              body={post.body}
+              author={post.author}
+            />
           ))}
         </ul>
       )}
